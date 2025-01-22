@@ -1,7 +1,21 @@
 package org.userservice.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.userservice.dto.UserCreationRequest;
+import org.userservice.service.UserService;
 
-@Controller
+@RestController
+@RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
+    private UserService userService;
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createUser(@RequestBody UserCreationRequest userCreationRequest) {
+        System.out.println("user created");
+    }
 }
