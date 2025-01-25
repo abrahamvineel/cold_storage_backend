@@ -6,6 +6,7 @@ import org.userservice.dto.UserCreationRequest;
 import org.userservice.model.User;
 import org.userservice.repository.UserRepository;
 
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
