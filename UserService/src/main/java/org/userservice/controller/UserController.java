@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.userservice.dto.UserCreationRequest;
+import org.userservice.dto.UserLoginDetailsRequest;
 import org.userservice.service.UserService;
 
 @RestController
@@ -18,5 +19,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createUser(@RequestBody UserCreationRequest userCreationRequest) {
         userService.createUser(userCreationRequest);
+    }
+
+    @GetMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
+    public String loginUser(@RequestBody UserLoginDetailsRequest loginDetailsRequest) {
+        userService.loginUser(loginDetailsRequest);
+        return "Success";
     }
 }

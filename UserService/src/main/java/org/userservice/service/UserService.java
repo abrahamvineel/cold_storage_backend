@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.userservice.dto.UserCreationRequest;
+import org.userservice.dto.UserLoginDetailsRequest;
 import org.userservice.model.User;
 import org.userservice.repository.UserRepository;
-
 
 @Service
 @RequiredArgsConstructor
@@ -20,5 +20,9 @@ public class UserService {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         userRepository.save(user);
+    }
+
+    public void loginUser(UserLoginDetailsRequest loginDetailsRequest) {
+
     }
 }
