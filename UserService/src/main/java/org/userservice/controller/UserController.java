@@ -1,9 +1,7 @@
 package org.userservice.controller;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.userservice.dto.UserCreationRequest;
 import org.userservice.dto.UserLoginDetailsRequest;
@@ -21,7 +19,7 @@ public class UserController {
         userService.createUser(userCreationRequest);
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public String loginUser(@RequestBody UserLoginDetailsRequest loginDetailsRequest) {
         userService.loginUser(loginDetailsRequest);
