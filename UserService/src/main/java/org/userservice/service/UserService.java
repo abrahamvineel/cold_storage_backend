@@ -22,7 +22,11 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void loginUser(UserLoginDetailsRequest loginDetailsRequest) {
-
+    public boolean loginUser(UserLoginDetailsRequest loginDetailsRequest) {
+        User user = new User();
+        user.setEmail(loginDetailsRequest.getEmail());
+        String encodedPassword = passwordEncoder.encode(loginDetailsRequest.getPassword());
+        user.setPassword(encodedPassword);
+        return userRepository.doesUserExist(user.getEmail(), user.getPassword()).isPresent();
     }
 }

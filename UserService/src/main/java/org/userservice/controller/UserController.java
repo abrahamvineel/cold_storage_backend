@@ -21,8 +21,7 @@ public class UserController {
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public String loginUser(@RequestBody UserLoginDetailsRequest loginDetailsRequest) {
-        userService.loginUser(loginDetailsRequest);
-        return "Success";
+    public boolean loginUser(@RequestBody UserLoginDetailsRequest loginDetailsRequest) {
+        return userService.loginUser(loginDetailsRequest);
     }
 }
