@@ -26,7 +26,7 @@ public class UserService {
 
     public boolean loginUser(UserLoginDetailsRequest loginDetailsRequest) {
         String loginEmail = loginDetailsRequest.getEmail();
-        User user = getUser(loginEmail);
+        User user = findByEmail(loginEmail);
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String rawPassword = loginDetailsRequest.getPassword();
@@ -35,7 +35,7 @@ public class UserService {
         return encoder.matches(rawPassword, storedHashedPassword) && loginEmail.equals(user.getEmail());
     }
 
-    private User getUser(String emailId) {
+    public User findByEmail(String emailId) {
         Optional<User> user = userRepository.findById(emailId);
         if(user.isPresent()) {
             return user.get();
