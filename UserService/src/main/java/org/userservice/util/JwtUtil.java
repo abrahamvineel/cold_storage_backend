@@ -12,7 +12,7 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "YourSuperSecretKeyForJwtYourSuperSecretKeyForJwt"; // 32+ chars
+    private static final String SECRET_KEY = "YourSuperSecretKeyForJwtYourSuperSecretKeyForJwt";
     private final SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET_KEY));
     private final long EXPIRATION_TIME = 1000 * 60 * 60;
 
@@ -32,12 +32,5 @@ public class JwtUtil {
         } catch (JwtException e) {
             return false;
         }
-    }
-
-    public String getEmailFromToken(String token) {
-        return Jwts.parser().verifyWith(key).build()
-                .parseSignedClaims(token)
-                .getPayload()
-                .getSubject();
     }
 }
