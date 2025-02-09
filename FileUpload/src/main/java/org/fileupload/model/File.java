@@ -19,7 +19,8 @@ public class File {
     private long id;
     private String userEmail;
     private int fileSizeInBytes;
-    private String fileType;
+    private FileType fileType;
+    @Column(length = 512)
     private String url;
     private Date uploadDate;
     private String fileName;

@@ -1,7 +1,5 @@
 package org.fileupload.service;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,16 +13,16 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 
 import java.io.IOException;
+import java.net.URI;
+import java.time.Duration;
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
-@NoArgsConstructor
 public class S3Service {
 
-    private S3Client s3Client;
+    private final S3Client s3Client;
 
-    private S3Presigner s3Presigner;
+    private final S3Presigner s3Presigner;
 
     @Value("${s3.bucketName}")
     private String bucketName;
@@ -37,13 +35,14 @@ public class S3Service {
         this.s3Client = S3Client.builder()
                 .region(Region.of(region))
                 .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create(accessKey, secretKey)))
-                .endpointOverride(java.net.URI.create(endpoint))
+                .endpointOverride(URI.create(endpoint))
+                .forcePathStyle(true)
                 .build();
 
         this.s3Presigner = S3Presigner.builder()
                 .region(Region.of(region))
                 .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create(accessKey, secretKey)))
-                .endpointOverride(java.net.URI.create(endpoint))
+                .endpointOverride(URI.create(endpoint))
                 .build();
     }
 
@@ -65,6 +64,7 @@ public class S3Service {
 
     public String generatePreSignedUrl(String fileName) {
         GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
+                .signatureDuration(Duration.ofMinutes(10))
                 .getObjectRequest(b -> b.bucket(bucketName).key(fileName))
                 .build();
 

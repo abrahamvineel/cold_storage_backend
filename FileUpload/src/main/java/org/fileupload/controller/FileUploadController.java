@@ -1,5 +1,7 @@
 package org.fileupload.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.fileupload.dto.FileUploadRequest;
 import org.fileupload.service.FileUploadService;
@@ -22,8 +24,11 @@ public class FileUploadController {
     @ResponseStatus(HttpStatus.CREATED)
     public void uploadFile(
              @RequestParam("file") MultipartFile file,
-                           @RequestParam("metadata") FileUploadRequest request) {
-        fileUploadService.uploadFile(request, file);
+                           @RequestParam("metadata") String request) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        FileUploadRequest r = objectMapper.readValue(request, FileUploadRequest.class);
+
+        fileUploadService.uploadFile(r, file);
     }
 
 //    @PostMapping

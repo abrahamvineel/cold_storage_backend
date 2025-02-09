@@ -13,8 +13,6 @@ import java.util.Date;
 import java.util.Set;
 
 @Service
-@AllArgsConstructor
-@NoArgsConstructor
 public class FileUploadService {
 
     private Set<FileType> blackList;
@@ -22,6 +20,12 @@ public class FileUploadService {
     private FileUploadRepository repository;
 
     private S3Service s3Service;
+
+    public FileUploadService(Set<FileType> blackList, FileUploadRepository repository, S3Service s3Service) {
+        this.blackList = blackList;
+        this.repository = repository;
+        this.s3Service = s3Service;
+    }
 
     public void uploadFile(FileUploadRequest fileUploadRequest, MultipartFile uploadedFile) {
         File file = new File();
