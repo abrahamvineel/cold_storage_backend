@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.fileupload.model.FileType;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
@@ -15,7 +16,5 @@ public class FileUploadRequest {
     private long id;
     private String userEmail;
     private int fileSizeInBytes;
-    private FileType fileType;
-    private String url;
-    private Date uploadDate;
+    private String fileType;
 }
