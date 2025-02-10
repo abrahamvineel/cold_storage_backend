@@ -1,7 +1,6 @@
 package org.fileupload.service;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import org.fileupload.dto.FileDTO;
 import org.fileupload.dto.FileUploadRequest;
 import org.fileupload.model.File;
 import org.fileupload.model.FileType;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -40,5 +40,9 @@ public class FileUploadService {
             file.setFileName(fileName);
             repository.save(file);
         }
+    }
+
+    public List<FileDTO> getFiles(String userEmail) {
+        return repository.getFiles(userEmail);
     }
 }

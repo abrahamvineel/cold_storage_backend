@@ -5,25 +5,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.fileupload.dto.FileUploadRequest;
 import org.fileupload.service.FileUploadService;
-import org.fileupload.service.S3Service;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Map;
+import java.util.Collections;
+import java.util.List;
 
 @RestController
-@RequestMapping("/upload")
+@RequestMapping("/files")
 @AllArgsConstructor
 public class FileUploadController {
 
     private FileUploadService fileUploadService;
 
-    @PostMapping
+    @PostMapping("/upload")
     @ResponseStatus(HttpStatus.CREATED)
-    public void uploadFile(
-             @RequestParam("file") MultipartFile file,
+    public void uploadFile(@RequestParam("file") MultipartFile file,
                            @RequestParam("metadata") String request) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         FileUploadRequest r = objectMapper.readValue(request, FileUploadRequest.class);
@@ -31,8 +29,9 @@ public class FileUploadController {
         fileUploadService.uploadFile(r, file);
     }
 
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public void uploadFile(@RequestParam("file") MultipartFile file) {
-//    }
+    @GetMapping
+    public List<String> getFiles(@RequestParam("email") String userEmail) {
+        fileUploadService.getFiles(userEmail);
+        return Collections.EMPTY_LIST;
+    }
 }
