@@ -43,6 +43,6 @@ public class FileUploadService {
     }
 
     public List<FileDTO> getFiles(String userEmail) {
-        return repository.getFiles(userEmail);
+        return repository.findFileByUserEmail(userEmail);
     }
 }

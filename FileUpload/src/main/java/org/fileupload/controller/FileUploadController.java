@@ -3,13 +3,13 @@ package org.fileupload.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import org.fileupload.dto.FileDTO;
 import org.fileupload.dto.FileUploadRequest;
 import org.fileupload.service.FileUploadService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -30,8 +30,7 @@ public class FileUploadController {
     }
 
     @GetMapping
-    public List<String> getFiles(@RequestParam("email") String userEmail) {
-        fileUploadService.getFiles(userEmail);
-        return Collections.EMPTY_LIST;
+    public List<FileDTO> getFiles(@RequestParam("email") String userEmail) {
+        return fileUploadService.getFiles(userEmail);
     }
 }
