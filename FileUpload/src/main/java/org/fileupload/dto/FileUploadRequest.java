@@ -13,5 +13,5 @@ public class FileUploadRequest {
     private long id;
     private String userEmail;
     private int fileSizeInBytes;
-    private FileType fileType;
+    private String fileType;
 }

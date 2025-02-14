@@ -34,7 +34,7 @@ public class FileUploadService {
         if (!blackList.contains(fileUploadRequest.getFileType())) {
             file.setUserEmail(fileUploadRequest.getUserEmail());
             file.setFileSizeInBytes(fileUploadRequest.getFileSizeInBytes());
-            file.setFileType(fileUploadRequest.getFileType());
+//            file.setFileType(fileUploadRequest.getFileType());
             file.setUrl(preSignedUrl);
             file.setUploadDate(new Date(System.currentTimeMillis()));
             file.setFileName(fileName);
