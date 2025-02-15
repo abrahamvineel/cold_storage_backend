@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.fileupload.dto.FileDTO;
 import org.fileupload.dto.FileUploadRequest;
+import org.fileupload.model.FileType;
 import org.fileupload.service.FileUploadService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,10 @@ public class FileUploadController {
                            @RequestParam("metadata") String request) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         FileUploadRequest r = objectMapper.readValue(request, FileUploadRequest.class);
+
+        String mimeType = file.getContentType();
+        FileType fileType = FileType.mimeType(mimeType);
+        r.setFileType(fileType);
 
         fileUploadService.uploadFile(r, file);
     }

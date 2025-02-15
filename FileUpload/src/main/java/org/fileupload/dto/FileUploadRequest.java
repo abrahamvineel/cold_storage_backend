@@ -1,5 +1,6 @@
 package org.fileupload.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,5 +14,6 @@ public class FileUploadRequest {
     private long id;
     private String userEmail;
     private int fileSizeInBytes;
-    private String fileType;
+    @JsonIgnore
+    private FileType fileType;
 }
