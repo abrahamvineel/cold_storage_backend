@@ -49,6 +49,6 @@ public class FileUploadService {
     }
 
     public ResponseEntity<InputStreamResource> downloadFile(String fileName) {
-
+        return s3Service.downloadFile(fileName);
     }
 }
