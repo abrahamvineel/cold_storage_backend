@@ -7,7 +7,9 @@ import org.fileupload.dto.FileDTO;
 import org.fileupload.dto.FileUploadRequest;
 import org.fileupload.model.FileType;
 import org.fileupload.service.FileUploadService;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,5 +39,10 @@ public class FileUploadController {
     @GetMapping
     public List<FileDTO> getFiles(@RequestParam("email") String userEmail) {
         return fileUploadService.getFiles(userEmail);
+    }
+
+    @GetMapping("/download")
+    public ResponseEntity<InputStreamResource> downloadFile(@RequestParam("fileName") String fileName) {
+        return fileUploadService.downloadFile(fileName);
     }
 }

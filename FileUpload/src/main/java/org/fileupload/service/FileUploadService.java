@@ -5,6 +5,8 @@ import org.fileupload.dto.FileUploadRequest;
 import org.fileupload.model.File;
 import org.fileupload.model.FileType;
 import org.fileupload.repository.FileUploadRepository;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -44,5 +46,9 @@ public class FileUploadService {
 
     public List<FileDTO> getFiles(String userEmail) {
         return repository.findFileByUserEmail(userEmail);
+    }
+
+    public ResponseEntity<InputStreamResource> downloadFile(String fileName) {
+
     }
 }
