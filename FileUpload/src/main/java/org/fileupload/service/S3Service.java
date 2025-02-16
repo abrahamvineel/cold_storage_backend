@@ -12,6 +12,7 @@ import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.S3Configuration;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
@@ -51,6 +52,9 @@ public class S3Service {
         this.s3Presigner = S3Presigner.builder()
                 .region(Region.of(region))
                 .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create(accessKey, secretKey)))
+                .serviceConfiguration(S3Configuration.builder()
+                                                     .pathStyleAccessEnabled(true)
+                                                     .build())
                 .endpointOverride(URI.create(endpoint))
                 .build();
     }
@@ -73,7 +77,7 @@ public class S3Service {
 
     public String generatePreSignedUrl(String fileName) {
         GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
-                .signatureDuration(Duration.ofMinutes(10))
+                .signatureDuration(Duration.ofHours(100))
                 .getObjectRequest(b -> b.bucket(bucketName).key(fileName))
                 .build();
 

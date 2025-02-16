@@ -42,7 +42,7 @@ public class FileUploadController {
     }
 
     @GetMapping("/download")
-    public ResponseEntity<InputStreamResource> downloadFile(@RequestParam("fileName") String fileName) {
+    public String downloadFile(@RequestParam("fileName") String fileName) {
         return fileUploadService.downloadFile(fileName);
     }
 }

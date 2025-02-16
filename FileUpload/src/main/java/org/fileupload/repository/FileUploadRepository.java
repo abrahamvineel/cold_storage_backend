@@ -13,4 +13,7 @@ import java.util.List;
 public interface FileUploadRepository extends JpaRepository<File, Long> {
     @Query("select new org.fileupload.dto.FileDTO(f.fileName, f.uploadDate, f.fileSizeInBytes) from File f where f.userEmail = :userEmail")
     List<FileDTO> findFileByUserEmail(@Param("userEmail") String userEmail);
+
+    @Query("select f.url from File f where f.fileName = :fileName")
+    String findURLByFileName(@Param("fileName") String fileName);
 }

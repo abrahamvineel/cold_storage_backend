@@ -48,7 +48,7 @@ public class FileUploadService {
         return repository.findFileByUserEmail(userEmail);
     }
 
-    public ResponseEntity<InputStreamResource> downloadFile(String fileName) {
-        return s3Service.downloadFile(fileName);
+    public String downloadFile(String fileName) {
+        return repository.findURLByFileName(fileName);
     }
 }
