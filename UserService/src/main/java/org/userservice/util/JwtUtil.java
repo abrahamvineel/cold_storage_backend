@@ -4,7 +4,9 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.inject.Inject;
 import org.springframework.stereotype.Component;
+import org.userservice.service.SessionsService;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -12,17 +14,26 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "YourSuperSecretKeyForJwtYourSuperSecretKeyForJwt";
+    public static final String SECRET_KEY = "YourSuperSecretKeyForJwtYourSuperSecretKeyForJwt";
     private final SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET_KEY));
     private final long EXPIRATION_TIME = 1000 * 60 * 60;
+    private final SessionsService sessionsService;
+
+    @Inject
+    public JwtUtil(SessionsService sessionsService) {
+        this.sessionsService = sessionsService;
+    }
 
     public String generateToken(String email) {
-        return Jwts.builder()
+        Date expiry = new Date(System.currentTimeMillis() + EXPIRATION_TIME);
+        String token = Jwts.builder()
                 .subject(email)
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .expiration(expiry)
                 .signWith(key, Jwts.SIG.HS256)
                 .compact();
+        sessionsService.saveToken(email, token, expiry);
+        return token;
     }
 
     public boolean validateToken(String token) {
