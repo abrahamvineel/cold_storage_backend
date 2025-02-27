@@ -65,17 +65,27 @@ public class FileUploadController {
         }
     }
     @GetMapping
-    public List<FileDTO> getFiles(@RequestParam("email") String userEmail) {
+    public ResponseEntity<?> getFiles(@RequestParam("email") String userEmail) {
         boolean isTokenValid = validateToken(userEmail);
+
         if (!isTokenValid) {
-            return Collections.emptyList();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid session");
         }
 
-        return fileUploadService.getFiles(userEmail);
+        List<FileDTO> files = fileUploadService.getFiles(userEmail);
+        return ResponseEntity.ok(files);
     }
 
     @GetMapping("/download")
-    public String downloadFile(@RequestParam("fileName") String fileName) {
-        return fileUploadService.downloadFile(fileName);
+    public ResponseEntity<?> downloadFile(@RequestParam("fileName") String fileName,
+                                          @RequestParam("email") String email) {
+
+        boolean isTokenValid = validateToken(email);
+        if (!isTokenValid) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid session");
+        }
+
+        String url = fileUploadService.downloadFile(fileName);
+        return ResponseEntity.ok(url);
     }
 }
