@@ -16,14 +16,11 @@ import java.util.UUID;
 public class Sessions {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(nullable = false)
+    private String emailId;
 
     @Column(unique = true, nullable = false)
     private String token;
-
-    @Column(nullable = false)
-    private String emailId;
 
     @Column(nullable = false)
     private Date expiry;

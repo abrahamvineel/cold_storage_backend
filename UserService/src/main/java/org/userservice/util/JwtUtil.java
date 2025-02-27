@@ -36,12 +36,7 @@ public class JwtUtil {
         return token;
     }
 
-    public boolean validateToken(String token) {
-        try {
-            Jwts.parser().verifyWith(key).build().parseSignedClaims(token);
-            return true;
-        } catch (JwtException e) {
-            return false;
-        }
+    public Boolean validateToken(String email) {
+        return sessionsService.validateToken(email);
     }
 }

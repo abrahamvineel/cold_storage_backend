@@ -24,4 +24,9 @@ public class SessionsService {
         session.setExpiry(expiry);
         sessionsRepository.save(session);
     }
+
+    public Boolean validateToken(String email) {
+        int validSessionCount = sessionsRepository.findTokenValidity(email);
+        return validSessionCount > 0;
+    }
 }

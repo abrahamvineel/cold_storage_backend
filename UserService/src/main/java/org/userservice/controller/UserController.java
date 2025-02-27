@@ -1,5 +1,6 @@
 package org.userservice.controller;
 
+import jakarta.ws.rs.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,5 +36,10 @@ public class UserController {
             return ResponseEntity.ok(new AuthResponse(token));
         }
         return ResponseEntity.status(401).body("Invalid Credentials");
+    }
+
+    @PostMapping("/validate-token")
+    public boolean isValidToken(@RequestParam("email") String userEmail) {
+        return jwtUtil.validateToken(userEmail);
     }
 }
